@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>后台登录</title>
+    <import type='css' file="css.bootstrap#min"/>
+    <import type='css' file="css.bootstrap-responsive#min"/>
+    <import type='css' file="css.bootstrap_custom"/>
+    <import type='js' file="js.jquery-1#8#3#min"/>
+    <import type='js' file="js.bootstrap#min"/>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+        form {
+            margin: 0;
+        }
+
+        .well {
+            padding-bottom: 0;
+        }
+    </style>
+    <script language="JavaScript">
+        function fleshVerify() {
+            //重载验证码
+            var timenow = new Date().getTime();
+            $('#verifyImg').attr('src', "{:U('Public/verify', array('type' => 'png', 't' => 't'))}" + timenow);
+        }
+        //-->
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="span8 offset2">
+            <div class="alert alert-info" style="font-size:18px; text-align: center;">
+                请使用FireFox、Chrome、IE9等浏览器！不支持IE8以下的浏览器！
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6 offset3">
+            <div class="well">
+                <form class="login-form form-horizontal" id="admin-login-form" action="{:U('Public/checkLogin')}" method="post">
+                    <fieldset>
+                        <legend>后台登录</legend>
+                        <div class="control-group">
+                            <div class="control-group ">
+                                <label class="control-label required" for="username">用户名</label>
+
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <span class="add-on"><i class="icon-user"></i></span><input class="input-medium" name="username" id="username" type="text"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="control-group ">
+                                <label class="control-label required" for="password">密码
+                                    <span class="required">*</span></label>
+
+                                <div class="controls">
+                                    <div class="input-prepend">
+                                        <span class="add-on"><i class="icon-lock"></i></span><input class="input-medium" name="password" id="password" type="password"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="control-group ">
+                                <label class="control-label" for="verify">验证码</label>
+
+                                <div class="controls">
+                                    <div class="input-prepend"><span class="add-on"><i class="icon-eye-open"></i></span><input class="input-small" name="verify" id="verify" type="text"/><img id="verifyImg" SRC="{:U('Public/verify', array('type' => 'png'))}" onClick="fleshVerify()" BORDER="0" ALT="点击刷新" style="cursor:pointer; padding: 0 20px;" align="absmiddle">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">&nbsp;</label>
+
+                            <div class="form-actions">
+                                <button class="btn btn-primary btn-large" type="submit" name="doSubmit">登录</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <footer>
+        Copyright &copy; {:date('Y')} by <a target="_blank" href="http://www.dandianbao.net">单店宝</a> All Rights Reserved.
+    </footer>
+</div>
+</body>
+</html>

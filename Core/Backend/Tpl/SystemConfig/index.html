@@ -1,0 +1,110 @@
+<include file="Public:header"/>
+<div class="page-header">
+    <h4>系统参数</h4>
+</div>
+<if condition="$successMsg">
+    <div class="alert alert-success">
+        {$successMsg}
+    </div>
+</if>
+<if condition="$errorMsg">
+    <div class="alert alert-danger">
+        {$errorMsg}
+    </div>
+</if>
+<form class="form-vertical" method="post">
+    <div class="control-group">
+        <label>网站名称</label>
+        <input type="text" name="SystemConfig[siteName]" value="{$systemConfigModel:siteName}" class="span5">
+    </div>
+    <div class="control-group">
+        <label>网站标题</label>
+        <input type="text" name="SystemConfig[siteTitle]" value="{$systemConfigModel:siteTitle}" class="span8">
+    </div>
+    <div class="control-group">
+        <label>网站关键字</label>
+        <textarea class="span8" rows="2" name="SystemConfig[siteKeywords]">{$systemConfigModel:siteKeywords}</textarea>
+    </div>
+    <div class="control-group">
+        <label>网站描述</label>
+        <textarea class="span8" rows="2" name="SystemConfig[siteDescription]">{$systemConfigModel:siteDescription}</textarea>
+    </div>
+    <div class="control-group">
+        <label>淘宝店铺掌柜昵称</label>
+        <input id="shopNick" type="text" name="SystemConfig[shopNick]" value="{$systemConfigModel:shopNick}" class="span3">
+        <a id="shopInfoBtn" href="javascript:" class="btn btn-success">一键获取推广网址</a>
+    </div>
+    <div class="control-group">
+        <label>淘宝店铺网址</label>
+        <input id="shopUrl" type="text" name="SystemConfig[shopUrl]" value="{$systemConfigModel:shopUrl}" class="span8">
+    </div>
+    <div class="control-group">
+        <label>淘宝店铺推广网址</label>
+        <input id="shopClickUrl" type="text" name="SystemConfig[shopClickUrl]" value="{$systemConfigModel:shopClickUrl}" class="span8">
+    </div>
+    <div class="control-group">
+        <label>淘宝客推广渠道</label>
+        <input type="text" name="SystemConfig[outerCode]" value="{$systemConfigModel:outerCode}" class="span5">
+
+        <div class="help-block">用来区分不同网站带来的收入，12个字符以内，只可用数字和字母。</div>
+    </div>
+    <div class="control-group">
+        <label>页面缓存时间(秒)</label>
+        <input type="text" name="SystemConfig[pageCacheTime]" value="{$systemConfigModel:pageCacheTime}" class="span2">
+        <div class="help-block">不开启请填0。开启缓存后会加快页面加载速度，但是会占用大量空间。</div>
+    </div>
+    <div class="control-group">
+        <label>底部版权声明文字(生成图片)</label>
+        <textarea class="span8" rows="2" name="SystemConfig[copyright]">{$systemConfigModel:copyright}</textarea>
+    </div>
+    <div class="control-group">
+        <label>头部附加代码(自定义HTML)</label>
+        <textarea class="span8" rows="2" name="SystemConfig[header]">{$systemConfigModel:header}</textarea>
+    </div>
+    <div class="control-group">
+        <label>底部附加代码(自定义HTML,统计代码,分享代码等)</label>
+        <textarea class="span8" rows="2" name="SystemConfig[footer]">{$systemConfigModel:footer}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-large">保存</button>
+</form>
+<script type="text/javascript">
+    $(function(){
+        $('#shopInfoBtn').live('click', function(){
+            if(typeof TOP == 'undefined'){
+                alert('未设置淘宝appkey');
+            }else if($('#shopNick').val() == ''){
+                alert('先填写淘宝掌柜昵称');
+            }else{
+                TOP.api('rest', 'post', {
+                            method : 'taobao.taobaoke.widget.shops.convert',
+                            fields : 'user_id,shop_title,click_url,commission_rate',
+                            seller_nicks : $('#shopNick').val(),
+                            outer_code : '{$systemConfig.outerCode}'
+                        },
+                        function(resp){
+                            if((typeof resp.error_response != 'undefined') || typeof resp.taobaoke_shops == 'undefined'){
+                                alert('获取淘宝店铺淘客推广地址失败，错误代码为：' + resp.error_response.code + '，错误信息为：' + resp.error_response.msg);
+                            }else{
+                                var shopInfo = resp.taobaoke_shops.taobaoke_shop[0];
+                                $('#shopClickUrl').val(shopInfo.click_url);
+                            }
+                        }
+                );
+                TOP.api('rest', 'post', {
+                    method : 'taobao.shop.get',
+                    fields : 'sid',
+                    nick : $('#shopNick').val()
+                }, function(resp){
+                    if(typeof resp.error_response != 'undefined'){
+                        alert('获取淘宝店铺展示地址失败，错误代码为：' + resp.error_response.code + '，错误信息为：' + resp.error_response.msg);
+                    }else{
+                        var shopInfo = resp.shop;
+                        $('#shopUrl').val('http://shop' + shopInfo.sid + '.taobao.com/');
+                    }
+                });
+            }
+            return false;
+        })
+    });
+</script>
+<include file="Public:footer"/>

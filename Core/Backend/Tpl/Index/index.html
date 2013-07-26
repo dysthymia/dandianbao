@@ -1,0 +1,30 @@
+<include file="Public:header"/>
+<foreach name="warnings" item="warning">
+    <div class="alert alert-danger">
+        {$warning}
+    </div>
+</foreach>
+<div class="hero-unit">
+    <h2>欢迎使用单店宝程序</h2>
+
+    <p>请使用FireFox、Chrome、IE9等浏览器，后台不支持IE6等旧式浏览器</p>
+
+    <p>您当前的版本：{$version}</p>
+
+    <p id="latest-version-wrap" style="color: green; display: none;">官方最新版本：<span id="latest-version"></span></p>
+
+    <p><a class="btn btn-primary" href="http://i.dandianbao.com" target="_blank">点击这里下载更新：http://i.dandianbao.com</a>
+    </p>
+</div>
+<script>
+    $(function () {
+        $.get('{:U("Index/latestVersion")}', function (data) {
+            if (data) {
+                $('#latest-version').html(data);
+                $('#latest-version-wrap').show();
+            }
+        });
+    })
+    ;
+</script>
+<include file="Public:footer"/>

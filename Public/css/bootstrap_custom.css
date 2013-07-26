@@ -1,0 +1,24 @@
+body{font: normal 14px arial, \5FAE\8F6F\96C5\9ED1, \5b8b\4f53, sans-serif; padding-top: 60px; padding-bottom: 20px;}
+footer{ font-size: 12px; text-align: right;}
+.nav-sider-well{ padding-left: 0px; padding-right: 0px;}
+.nav-header{ font-size: 14px;}
+body > .navbar .brand {
+    padding: 0;
+    line-height: 40px;
+    margin: 0 20px;
+    font-weight: bold;
+    color: #999999;
+    text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.125);
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    transition: all .2s linear;
+}
+body > .navbar .brand:hover {
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.4);
+}
+
+.control-group{ margin-bottom: 20px;}
+.login-form .control-group{ margin-bottom: 8px;}
+.help-block, .help-inline{color:blueviolet;}
+#system-config-form .control-group{ margin-bottom: 20px;}

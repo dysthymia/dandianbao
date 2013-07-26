@@ -1,0 +1,71 @@
+<include file="Public:header"/>
+<div class="page-header">
+    <h4>伪静态配置</h4>
+</div>
+<if condition="$successMsg">
+    <div class="alert alert-success">
+        {$successMsg}
+    </div>
+</if>
+<if condition="$errorMsg">
+    <div class="alert alert-danger">
+        {$errorMsg}
+    </div>
+</if>
+<form class="form-vertical" method="post">
+    <div class="control-group">
+        <label>URL模式</label>
+        <select name="Rewrite[urlModel]" id="urlModel">
+            <option value="0" <if condition="$rewriteModel:urlModel eq 0">selected</if>>动态</option>
+            <option value="2" <if condition="$rewriteModel:urlModel eq 2">selected</if>>伪静态</option>
+        </select>
+    </div>
+    <div id="rewriteWrap">
+        <div class="control-group">
+            <label>URL分隔符</label>
+            <select name="Rewrite[seperator]" id="seperator">
+                <option value="-" <if condition="$rewriteModel:seperator eq '-'">selected</if>>-</option>
+                <option value="/" <if condition="$rewriteModel:seperator eq '/'">selected</if>>/</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>URL后缀</label>
+            <input id="urlSuffix" type="text" name="Rewrite[urlSuffix]" value="{$rewriteModel:urlSuffix}" class="span2">
+        </div>
+        <div class="control-group">
+            <label>分类URL前缀</label>
+            <input id="categoryPrefix" type="text" name="Rewrite[categoryPrefix]" value="{$rewriteModel:categoryPrefix}" class="span2">
+        </div>
+        <div class="control-group">
+            <label>搜索URL前缀</label>
+            <input id="searchPrefix" type="text" name="Rewrite[searchPrefix]" value="{$rewriteModel:searchPrefix}" class="span2">
+        </div>
+        <div class="control-group">
+            <label>商品URL前缀</label>
+            <input id="detailPrefix" type="text" name="Rewrite[detailPrefix]" value="{$rewriteModel:detailPrefix}" class="span2">
+        </div>
+        <div class="control-group">
+            <label>单页URL前缀</label>
+            <input id="pagePrefix" type="text" name="Rewrite[pagePrefix]" value="{$rewriteModel:pagePrefix}" class="span2">
+        </div>
+        <div class="alert alert-info">
+            <a href="http://www.dandianbao.net/help/14.html" target="_blank" class="btn btn-success">伪静态配置说明</a>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-large">保存</button>
+</form>
+<script type="text/javascript">
+    function showRewriteWrap() {
+        urlModel = $('#urlModel').val();
+        if (urlModel == '0') {
+            $('#rewriteWrap').hide();
+        } else {
+            $('#rewriteWrap').show();
+        }
+    }
+    $(function () {
+        showRewriteWrap();
+        $('#urlModel').change(showRewriteWrap);
+    });
+</script>
+<include file="Public:footer"/>

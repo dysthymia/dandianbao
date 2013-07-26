@@ -1,0 +1,29 @@
+<include file="Public:header"/>
+<include file="nav"/>
+<div class="page-header">
+    <h4>APPKEY列表</h4>
+</div>
+<if condition="$appkeys">
+    <table class="table table-bordered">
+        <tr>
+            <th>App Key</th>
+            <th>App Secret</th>
+            <th>操作</th>
+        </tr>
+        <foreach name="appkeys" key="appkey" item="vo">
+            <tr>
+                <td>{$vo.appKey}</td>
+                <td>{$vo.appSecret}</td>
+                <td>
+                    <a href="{:U('Admin/Appkey/update', array('key' => $appkey))}" class="btn btn-primary">编辑</a>
+                    <a href="{:U('Admin/Appkey/delete', array('key' => $appkey))}" class="btn btn-danger" onclick="if(!confirm('确定删除吗？')) return false;">删除</a>
+                </td>
+            </tr>
+        </foreach>
+    </table>
+    <else/>
+    <div class="alert alert-info">
+        您还没有添加
+    </div>
+</if>
+<include file="Public:footer"/>

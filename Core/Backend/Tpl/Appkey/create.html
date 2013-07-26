@@ -1,0 +1,22 @@
+<include file="Public:header"/>
+<include file="nav"/>
+<div class="page-header">
+    <h4>添加APPKEY</h4>
+</div>
+<if condition="$errorMsg">
+    <div class="alert alert-danger">
+        {$errorMsg}
+    </div>
+</if>
+<form class="form-vertical" method="post">
+    <div class="control-group">
+        <label>App Key</label>
+        <input type="text" name="appKey" value="" class="span5">
+    </div>
+    <div class="control-group">
+        <label>App Secret</label>
+        <input type="text" name="appSecret" value="" class="span5">
+    </div>
+    <button type="submit" class="btn btn-primary btn-large">保存</button>
+</form>
+<include file="Public:footer"/>
